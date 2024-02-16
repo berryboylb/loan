@@ -27,12 +27,11 @@ contract Loan {
     //tier limits
     uint256[3] public tierLimits = [1 ether, 2 ether, 3 ether];
 
-    //this checks if user is created
     modifier userExists() {
         require(userExists[msg.sender], "User does not exist");
         _;
     }
-    //this checks if user is not created
+
     modifier userDoesNotExist() {
         require(!userExists[msg.sender], "User already exists");
         _;
@@ -44,7 +43,7 @@ contract Loan {
     event MoneyBorrowed(address indexed userAddress, uint256 amount);
     event MoneyPaidBack(address indexed userAddress, uint256 amount);
 
-    //assign ing the owner of this contract on creation
+    //assigning the owner of this contract on creation
     constructor() {
         owner = payable(msg.sender);
     }
@@ -99,7 +98,7 @@ contract Loan {
         (bool sent, bytes memory data) = payable(address(this)).call{
             value: amount
         }("");
-        require(sent, "Failed to send Load");
+        require(sent, "Failed to send Loan");
 
         // Update user's balance
         user.currently_owed = amount;
